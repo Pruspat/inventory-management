@@ -1,9 +1,17 @@
-import express from 'express';
-import { PORT } from './config';
+import express, { Express } from 'express';
+import { SERVER_PORT } from './config';
+import { db } from './dbConnection';
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// app.get("/", (req: Request, res: Response) => {
+//   res.send("Express + TypeScript Server");
+// });
+
+db.then(() => {
+  app.listen(SERVER_PORT, () =>
+    console.log(`server running at http://localhost:${SERVER_PORT}`)
+  );
 });

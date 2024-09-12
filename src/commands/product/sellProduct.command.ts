@@ -1,8 +1,9 @@
-import { SellProductType } from '../../common';
+import { logger, SellProductType } from '../../common';
 import { BadRequestError, NotFoundError } from '../../common/errors';
 import { Product } from '../../models';
 
 export const sellProductCommand = async (data: SellProductType) => {
+  logger.info('Selling product: ' + JSON.stringify(data));
   const product = await Product.findById(data.id);
   if (!product) {
     throw new NotFoundError('Product not found');

@@ -1,8 +1,9 @@
-import { CreateOrderType } from '../../common';
+import { CreateOrderType, logger } from '../../common';
 import { BadRequestError, NotFoundError } from '../../common/errors';
 import { Order, Product } from '../../models';
 
 export const createOrderCommand = async (data: CreateOrderType) => {
+  logger.info('Creatig order: ' + JSON.stringify(data));
   await validateOrder(data);
   const order = await createOrder(data);
   await updateStock(data);
